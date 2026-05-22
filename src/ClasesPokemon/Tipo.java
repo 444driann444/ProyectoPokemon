@@ -1,0 +1,22 @@
+package ClasesPokemon;
+
+public enum Tipo {
+	NORMAL,
+	LUCHA,
+	FUEGO,
+	AGUA,
+	PLANTA,
+	SINIESTRO,
+	PSÍQUICO,
+	ELÉCTRICO,
+	ACERO,
+	HADA,
+	VENENO,
+	DRAGÓN,
+	TIERRA,
+	VOLADOR,
+	ROCA,
+	BICHO,
+	FANTASMA,
+	HIELO
+}
