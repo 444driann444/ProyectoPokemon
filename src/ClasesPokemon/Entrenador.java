@@ -4,143 +4,505 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Entrenador {
-	private String nombre;
-	private List<Pokemon> equipo;
-	private Pokemon pokemonActivo;
-	private char rango; // de 'Z' a 'A'
-	private char[] rangos = { 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I',
-			'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A' };
-	// Constructor de la clase Entrenador.java
 
-	public Entrenador(String nombre, char rango) {
-		this.nombre = nombre;
-		this.rango = rango;
-		this.equipo = new ArrayList<Pokemon>();
-		this.pokemonActivo = null;
-	}
+    private String nombre;
+    private List<Pokemon> equipo;
+    private Pokemon pokemonActivo;
+    private char rango;
 
-	// Método para añadir Pokémon al equipo (máximo 6)
 
-	public void agregarPokemon(Pokemon pokemon) {
-		if (equipo.size() < 6) {
-			equipo.add(pokemon);
-			if (pokemonActivo == null) {
-				pokemonActivo = pokemon;
-			}
-		}
-	}
+    private char[] rangos = {
 
-	// Método para cambiar de pokemon activo
+            'Z','Y','X','W',
+            'V','U','T','S',
+            'R','Q','P','O',
+            'N','M','L','K',
+            'J','I','H','G',
+            'F','E','D','C',
+            'B','A'
 
-	public void cambiarPokemon(Pokemon pokemonActual, Pokemon pokemonCambio) {
+    };
 
-		if (pokemonCambio.getEstado() != Estado.DEBILITADO && pokemonActual != pokemonCambio) {
 
-			System.out.println(pokemonActual.getNombre() + " vuelve! Adelante, " + pokemonCambio.getNombre());
-			pokemonActivo = pokemonCambio;
 
-		} else if (pokemonCambio.getEstado() == Estado.DEBILITADO) {
-			System.out.println(pokemonCambio.getNombre() + " está debilitado, no puede luchar");
-		} else if (pokemonActual == pokemonCambio) {
-			System.out.println("Ese pokemon ya está en el campo de batalla. Elige otro!");
-		}
-	}
 
-	public Pokemon devolverPokemon() {
+    public Entrenador(
+            String nombre,
+            char rango) {
 
-		return pokemonActivo;
 
-	}
+        if (
 
-	public boolean comprobarEquipo() {
+                nombre == null ||
 
-		for (int i = 0; i < equipo.size(); i++) {
-			if (!equipo.get(i).comprobarSiEstaDebilitado()) {
-				return true;
-			}
-		}
-		return false;
-	}
+                nombre.isBlank()
 
-	public int numeroDebilitados() {
+        ) {
 
-		int contadorDebilitados = 0;
+            throw new IllegalArgumentException(
+                    "Nombre inválido");
 
-		for (int i = 0; i < equipo.size(); i++) {
-			if (equipo.get(i).comprobarSiEstaDebilitado()) {
-				contadorDebilitados++;
-			}
-		}
+        }
 
-		return contadorDebilitados;
-	}
 
-	public void subirRango() {
+        if (
 
-		int pos = 0;
-		
-		if (rango == 'A') {
-			System.out.println("Ya estás en el rango máximo! Eres el mejor!");
-		} else {
-			for (int i = 0; i < rangos.length; i++) {
-				if (rango == rangos[i]) {
-					pos = i;
-				}
-			}
-			pos++;
-			rango = rangos[pos];
-			System.out.println("Has subido al rango " + rango);
-		}
+                rango < 'A'
 
-	}
-	
-	
-	public void bajarRango() {
+                        ||
 
-		int pos = 0;
-		
-		if (rango == 'Z') {
-			System.out.println("Ya estás en el rango mínimo! No se puede bajar más!");
-		} else {
-			for (int i = 0; i < rangos.length; i++) {
-				if (rango == rangos[i]) {
-					pos = i;
-				}
-			}
-			pos--;
-			rango = rangos[pos];
-			System.out.println("Has bajado al rango " + rango);
-		}
+                        rango > 'Z'
 
-	}
+        ) {
 
-	// Getters y setters de la información del Entrenador
+            throw new IllegalArgumentException(
+                    "Rango inválido");
 
-	public String getNombre() {
-		return nombre;
-	}
+        }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
-	public List<Pokemon> getEquipo() {
-		return equipo;
-	}
+        this.nombre =
+                nombre;
 
-	public Pokemon getPokemonActivo() {
-		return pokemonActivo;
-	}
+        this.rango =
+                rango;
 
-	public void setPokemonActivo(Pokemon pokemonActivo) {
-		this.pokemonActivo = pokemonActivo;
-	}
+        this.equipo =
+                new ArrayList<>();
 
-	public char getRango() {
-		return rango;
-	}
+        this.pokemonActivo =
+                null;
 
-	public void setRango(char rango) {
-		this.rango = rango;
-	}
+    }
+
+
+
+
+
+    public void agregarPokemon(
+            Pokemon pokemon) {
+
+
+        if (
+
+                pokemon == null
+
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Pokemon null");
+
+        }
+
+
+        if (
+
+                equipo.contains(
+                        pokemon)
+
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Pokemon repetido");
+
+        }
+
+
+
+        if (
+
+                equipo.size()
+
+                        >=
+
+                        6
+
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Equipo lleno");
+
+        }
+
+
+        equipo.add(
+                pokemon);
+
+
+        if (
+
+                pokemonActivo
+                        == null
+
+        ) {
+
+            pokemonActivo =
+                    pokemon;
+
+        }
+
+    }
+
+
+
+
+
+
+
+    public void cambiarPokemon(
+            Pokemon pokemonCambio) {
+
+
+        if (
+
+                pokemonCambio
+                        == null
+
+        ) {
+
+            throw new IllegalArgumentException();
+
+        }
+
+
+
+        if (
+
+                !equipo.contains(
+                        pokemonCambio)
+
+        ) {
+
+            throw new IllegalArgumentException(
+                    "No pertenece al equipo");
+
+        }
+
+
+
+        if (
+
+                pokemonCambio
+                        .getEstado()
+
+                        ==
+
+                        Estado.DEBILITADO
+
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Pokemon debilitado");
+
+        }
+
+
+
+        if (
+
+                pokemonCambio
+                        ==
+
+                        pokemonActivo
+
+        ) {
+
+            throw new IllegalArgumentException(
+                    "Ya es activo");
+
+        }
+
+
+
+        pokemonActivo =
+                pokemonCambio;
+
+
+    }
+
+
+
+
+    public Pokemon devolverPokemon() {
+
+        return pokemonActivo;
+
+    }
+
+
+
+
+
+    // comprobar si queda algun  pokemon
+
+
+    public boolean comprobarEquipo() {
+
+
+        for (
+
+                Pokemon pokemon
+
+                :
+
+                equipo
+
+        ) {
+
+
+            if (
+
+                    pokemon.getEstado()
+
+                            ==
+
+                            Estado.ACTIVO
+
+            ) {
+
+                return true;
+
+            }
+
+
+        }
+
+
+        return false;
+
+    }
+
+
+
+
+
+
+    public int numeroDebilitados() {
+
+
+        int contador =
+                0;
+
+
+        for (
+
+                Pokemon pokemon
+
+                :
+
+                equipo
+
+        ) {
+
+
+            if (
+
+                    pokemon.getEstado()
+
+                            ==
+
+                            Estado.DEBILITADO
+
+            ) {
+
+                contador++;
+
+            }
+
+        }
+
+
+        return contador;
+
+    }
+
+
+
+
+
+
+    public void subirRango() {
+
+
+        if (
+
+                rango
+                        ==
+
+                        'A'
+
+        ) {
+
+            return;
+
+        }
+
+
+
+        for (
+
+                int i=0;
+
+                i<rangos.length;
+
+                i++
+
+        ) {
+
+
+            if (
+
+                    rango
+
+                            ==
+
+                            rangos[i]
+
+            ) {
+
+
+                rango =
+                        rangos[i+1];
+
+
+                break;
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+    public void bajarRango() {
+
+
+        if (
+
+                rango
+                        ==
+
+                        'Z'
+
+        ) {
+
+            return;
+
+        }
+
+
+
+        for (
+
+                int i=0;
+
+                i<rangos.length;
+
+                i++
+
+        ) {
+
+
+            if (
+
+                    rango
+
+                            ==
+
+                            rangos[i]
+
+            ) {
+
+
+                rango =
+                        rangos[i-1];
+
+
+                break;
+
+            }
+
+
+        }
+
+
+    }
+
+
+
+
+
+
+
+    // Getters and Setters
+
+
+    public String getNombre() {
+
+        return nombre;
+
+    }
+
+
+
+    public void setNombre(
+            String nombre) {
+
+        this.nombre =
+                nombre;
+
+    }
+
+
+
+    public List<Pokemon> getEquipo() {
+
+        return equipo;
+
+    }
+
+
+
+    public Pokemon getPokemonActivo() {
+
+        return pokemonActivo;
+
+    }
+
+
+
+    public void setPokemonActivo(
+            Pokemon pokemonActivo) {
+
+        this.pokemonActivo =
+                pokemonActivo;
+
+    }
+
+
+
+    public char getRango() {
+
+        return rango;
+
+    }
+
+
+
+    public void setRango(
+            char rango) {
+
+        this.rango =
+                rango;
+
+    }
+
+
 }
