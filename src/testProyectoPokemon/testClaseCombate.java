@@ -11,7 +11,7 @@ import ClasesPokemon.Habilidad;
 import ClasesPokemon.Pokemon;
 import ClasesPokemon.Tipo;
 
-class TestClaseCombate {
+class testClaseCombate {
 
     @Test
     void crearCombateValido() {
@@ -101,7 +101,7 @@ class TestClaseCombate {
                         "Pikachu",
                         Tipo.ELÉCTRICO,
                         100,
-                        0,
+                        1,
                         10,
                         Estado.DEBILITADO);
 
@@ -149,7 +149,7 @@ class TestClaseCombate {
 
                         100,
 
-                        0,
+                        1,
 
                         10,
 
@@ -185,54 +185,49 @@ class TestClaseCombate {
     void determinarGanador() {
 
         Entrenador ash =
-
                 new Entrenador(
                         "Ash",
                         'Z');
 
-
         Entrenador gary =
-
                 new Entrenador(
                         "Gary",
                         'Y');
 
 
-        Pokemon debilitado =
-
+        Pokemon activo =
                 new Pokemon(
-
-                        "Pikachu",
-
-                        Tipo.ELÉCTRICO,
-
+                        "Charizard",
+                        Tipo.FUEGO,
                         100,
-
-                        0,
-
+                        100,
                         10,
+                        Estado.ACTIVO);
 
+        ash.agregarPokemon(activo);
+
+
+        Pokemon debilitado =
+                new Pokemon(
+                        "Pikachu",
+                        Tipo.ELÉCTRICO,
+                        100,
+                        1,
+                        10,
                         Estado.DEBILITADO);
 
-
-        gary.agregarPokemon(
-                debilitado);
+        gary.agregarPokemon(debilitado);
 
 
         Combate combate =
-
                 new Combate(
                         ash,
                         gary);
 
-
         combate.determinarGanador();
 
-
         assertEquals(
-
                 "Ash",
-
                 combate.getGanador());
 
     }

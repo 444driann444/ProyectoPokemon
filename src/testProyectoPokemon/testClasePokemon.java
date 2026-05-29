@@ -7,7 +7,7 @@ import ClasesPokemon.Pokemon;
 import ClasesPokemon.Tipo;
 import ClasesPokemon.Estado;
 
-class TestClasePokemon {
+class testClasePokemon {
 
     @Test
     void crearPokemonValido() {

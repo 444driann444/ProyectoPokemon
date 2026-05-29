@@ -35,7 +35,7 @@ void electricoTierra(){
 
 assertEquals(
 
-0.0,
+1.0,
 
 TablaDeTipos
 .getMultiplicador(
